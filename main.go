@@ -56,6 +56,14 @@ func main() {
 		member.PUT("/edit-member", controller.UpdateMemberInfo)
 		member.POST("/delete-member", controller.DeleteMemberInfo)
 	}
+
+	enquiry := router.Group("/v1/enquiry")
+	{
+		enquiry.POST("/add-enquiry", controller.AddEnquiryData)
+		enquiry.POST("/get-enquiry-info", controller.GetEnquiryInfo)
+		enquiry.PUT("/edit-enquiry", controller.UpdateEnquiryInfo)
+		enquiry.POST("/delete-enquiry", controller.DeleteEnquiryInfo)
+	}
 	router.Run(":" + os.Getenv("GO_SERVER_PORT"))
 
 }

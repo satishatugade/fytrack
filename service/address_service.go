@@ -5,10 +5,18 @@ import (
 	"fytrack/repository"
 )
 
-func AddressMaster(address entity.AddressMaster) (int64, error) {
-	return repository.AddMemberAddressInfo(address)
+func AddressMaster(addressInfo entity.AddressMaster) (int64, error) {
+	return repository.AddMemberAddressInfo(addressInfo)
 }
 
-func GetAddressMasterInfo(addressID int) (entity.AddressMaster, error) {
-	return repository.GetAddressMasterInfo(addressID)
+func GetAddressMasterInfo(addressId uint) (entity.AddressMaster, error) {
+	return repository.GetAddressMasterInfo(addressId)
+}
+
+func UpdateAddressMasterInfo(addressId uint, addressInfo entity.AddressMaster) error {
+	return repository.UpdateAddressMasterInfo(addressId, addressInfo)
+}
+
+func DeleteAddressInfo(addressId int64) error {
+	return repository.DeleteAddressInfo(addressId)
 }

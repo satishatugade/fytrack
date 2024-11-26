@@ -2,12 +2,13 @@ package entity
 
 type Member struct {
 	Id                     uint          `json:"id" gorm:"primaryKey"`
-	PlanId                 int           `json:"plan_id"`
-	AddressId              int           `json:"address_id"`
+	PlanId                 uint          `json:"plan_id"`
+	AddressId              uint          `json:"address_id"`
 	AddressInfo            AddressMaster `json:"address_info" gorm:"-"`
 	FirstName              string        `json:"first_name" binding:"required"`
 	LastName               string        `json:"last_name"`
 	Email                  string        `json:"email"`
+	MobileNo               string        `json:"mobile_no"`
 	AssignTo               string        `json:"assign_to"`
 	DateOfBirth            string        `json:"date_of_birth"`
 	Gender                 string        `json:"gender"`
