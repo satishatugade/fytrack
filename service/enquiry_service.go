@@ -13,7 +13,7 @@ func GetEnquiryInfo(enquiryId int64) ([]entity.Enquiry, error) {
 	return repository.GetEnquiryInfo(enquiryId)
 }
 
-func UpdateEnquiryInfo(enquiryId int64, enquiry entity.Enquiry) error {
+func UpdateEnquiryInfo(enquiryId int64, enquiry entity.Enquiry) (entity.Enquiry, error) {
 	return repository.UpdateEnquiryInfo(enquiryId, enquiry)
 }
 

@@ -69,12 +69,12 @@ func UpdateMemberInfo(c *gin.Context) {
 		entity.RespondError(c, http.StatusBadRequest, "Invalid request data ", err.Error())
 		return
 	}
-	err = service.UpdateMemberInfo(memberID, member)
+	updatedMemberInfo, err := service.UpdateMemberInfo(memberID, member)
 	if err != nil {
 		entity.RespondError(c, http.StatusInternalServerError, "Unable to update member info ", err.Error())
 		return
 	}
-	err = service.UpdateAddressMasterInfo(uint(memberID), member.AddressInfo)
+	err = service.UpdateAddressMasterInfo(updatedMemberInfo.AddressId, member.AddressInfo)
 	if err != nil {
 		entity.RespondError(c, http.StatusInternalServerError, "Unable to update address info ", err.Error())
 		return

@@ -33,18 +33,21 @@ func GetEnquiryInfo(enquiryId int64) ([]entity.Enquiry, error) {
 	return enquiries, nil
 }
 
-func UpdateEnquiryInfo(enquiryId int64, enquiry entity.Enquiry) error {
+func UpdateEnquiryInfo(enquiryId int64, enquiry entity.Enquiry) (entity.Enquiry, error) {
 	var existingEnquiry entity.Enquiry
 	if err := config.DB.First(&existingEnquiry, enquiryId).Error; err != nil {
 		if err == gorm.ErrRecordNotFound {
-			return errors.New("enquiry not found")
+			return entity.Enquiry{}, errors.New("enquiry not found")
 		}
-		return errors.New("failed to find existingEnquiry: " + err.Error())
+		return entity.Enquiry{}, errors.New("failed to find existingEnquiry: " + err.Error())
 	}
 	if err := config.DB.Model(&existingEnquiry).Updates(enquiry).Error; err != nil {
-		return errors.New("failed to update existingEnquiry: " + err.Error())
+		return entity.Enquiry{}, errors.New("failed to update existingEnquiry: " + err.Error())
 	}
-	return nil
+	if err := config.DB.First(&existingEnquiry, enquiryId).Error; err != nil {
+		return entity.Enquiry{}, errors.New("failed to reload updated staff: " + err.Error())
+	}
+	return existingEnquiry, nil
 }
 
 func DeleteEnquiryInfo(enquiryId int64) error {

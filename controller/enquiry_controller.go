@@ -69,12 +69,12 @@ func UpdateEnquiryInfo(c *gin.Context) {
 		entity.RespondError(c, http.StatusBadRequest, "Invalid request data ", err.Error())
 		return
 	}
-	err = service.UpdateEnquiryInfo(enquiryId, enquiry)
+	updatedEnquiryInfo, err := service.UpdateEnquiryInfo(enquiryId, enquiry)
 	if err != nil {
 		entity.RespondError(c, http.StatusInternalServerError, "Unable to update enquiry info ", err.Error())
 		return
 	}
-	err = service.UpdateAddressMasterInfo(uint(enquiryId), enquiry.AddressInfo)
+	err = service.UpdateAddressMasterInfo(updatedEnquiryInfo.AddressId, enquiry.AddressInfo)
 	if err != nil {
 		entity.RespondError(c, http.StatusInternalServerError, "Unable to update enquiry address info ", err.Error())
 		return

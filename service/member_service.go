@@ -13,7 +13,7 @@ func GetMemberInfo(memberID int64) ([]entity.Member, error) {
 	return repository.GetMemberInfo(memberID)
 }
 
-func UpdateMemberInfo(memberId int64, member entity.Member) error {
+func UpdateMemberInfo(memberId int64, member entity.Member) (entity.Member, error) {
 	return repository.UpdateMemberInfo(memberId, member)
 }
 

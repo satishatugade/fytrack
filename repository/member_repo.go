@@ -33,21 +33,23 @@ func GetMemberInfo(memberID int64) ([]entity.Member, error) {
 	return members, nil
 }
 
-func UpdateMemberInfo(memberID int64, member entity.Member) error {
+func UpdateMemberInfo(memberId int64, member entity.Member) (entity.Member, error) {
 	var existingMember entity.Member
 
-	if err := config.DB.First(&existingMember, memberID).Error; err != nil {
+	if err := config.DB.First(&existingMember, memberId).Error; err != nil {
 		if err == gorm.ErrRecordNotFound {
-			return errors.New("member not found")
+			return entity.Member{}, errors.New("member not found")
 		}
-		return errors.New("failed to find member: " + err.Error())
+		return entity.Member{}, errors.New("failed to find member: " + err.Error())
 	}
 
 	if err := config.DB.Model(&existingMember).Updates(member).Error; err != nil {
-		return errors.New("failed to update member: " + err.Error())
+		return entity.Member{}, errors.New("failed to update member: " + err.Error())
 	}
-
-	return nil
+	if err := config.DB.First(&existingMember, memberId).Error; err != nil {
+		return entity.Member{}, errors.New("failed to reload updated staff: " + err.Error())
+	}
+	return existingMember, nil
 }
 
 func DeleteMemberInfo(memberID int64) error {
